@@ -6,9 +6,11 @@ Pascal's Triangle
 
 def pascal_triangle(n):
     """
-    Retourne une liste de listes d'entiers représentant le triangle de Pascal pour n.
+    Retourne une liste de listes 
+    d'entiers représentant le triangle de Pascal pour n.
 
-    Renvoie une liste vide si n <= 0. On peut supposer que n sera toujours un entier.
+    Renvoie une liste vide si n <= 0. 
+    On peut supposer que n sera toujours un entier.
     """
     if n <= 0:
         return []
