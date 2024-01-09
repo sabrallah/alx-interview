@@ -1,32 +1,26 @@
 #!/usr/bin/python3
-
 def canUnlockAll(boxes):
     """
-    Determines if all the boxes can be opened.
+    Determine if all boxes can be unlocked.
 
-    Args:
-    - boxes: List of lists representing locked boxes.
+    This function iterates over a list of lists (boxes), where each list
+    represents a box and contains keys to other boxes. It starts with the
+    first box unlocked (box 0) and iterates through the keys in each box.
+    If a key corresponds to a box that hasn't been unlocked yet, it's added
+    to the list of keys. If all boxes can be unlocked, the function returns
+    True; otherwise, it returns False.
+
+    Parameters:
+    boxes (list of lists): Each list represents a box and contains keys to other boxes.
 
     Returns:
-    - True if all boxes can be opened, else False.
+    bool: True if all boxes can be unlocked, else False.
     """
-    # Set to keep track of opened boxes
-    opened_boxes = set()
-
-    # Add the first box to the set
-    opened_boxes.add(0)
-
-    # Queue to keep track of boxes to be checked
-    box_queue = [0]
-
-    while box_queue:
-        current_box = box_queue.pop(0)
-
-        # Check if the keys in the current box open new boxes
-        for key in boxes[current_box]:
-            if key < len(boxes) and key not in opened_boxes:
-                opened_boxes.add(key)
-                box_queue.append(key)
-
-    # Check if all boxes are opened
-    return len(opened_boxes) == len(boxes)
+    keys = [0]
+    for key in keys:
+        for box_key in boxes[key]:
+            if box_key not in keys and box_key < len(boxes):
+                keys.append(box_key)
+    if len(keys) == len(boxes):
+        return True
+    return False
