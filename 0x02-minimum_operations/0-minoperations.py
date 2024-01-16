@@ -1,28 +1,30 @@
+#!/usr/bin/python3
+"""
+This module contains the minOperations function
+"""
+
+
 def minOperations(n):
     """
-    Calculates the minimum number of operations needed to reach n H characters.
-
-    Args:
-        n: The target number of H characters.
-
-    Returns:
-        The minimum number of operations, or 0 if n is impossible to achieve.
+    Calculate the minimum operations to achieve exactly n H characters
+    
+    :param n: int
+    :return: int
     """
+    if not isinstance(n, int) or n <= 1:
+        return 0
 
-    if n < 1:
-        return 0  # Invalid input
+    ops = 0
+    h = 2
 
-    operations = 0
-    while n > 1:
-        # Find the largest power of 2 that divides n
-        largest_power = 0
-        while n % 2 == 0:
-            n //= 2
-            largest_power += 1
+    while h <= n:
+        # Check if n is divisible by current h
+        while n % h == 0:
+            ops += h
+            n //= h
+        h += 1
 
-        # Add the number of operations for this power
-        operations += largest_power
-        n -= largest_power  # Subtract remaining characters after division
+    return ops
 
-    # Add one final operation to copy the remaining character
-    return operations + 1
+
+if __name__ == "__main__":
