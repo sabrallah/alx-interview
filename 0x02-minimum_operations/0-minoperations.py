@@ -1,27 +1,28 @@
-#!/usr/bin/python3
-"""
-0-minoperations.py - Minimum Operations
-"""
-
 def minOperations(n):
     """
-    Calculates the fewest number of operations needed to obtain exactly n 'H' characters.
+    Calculates the minimum number of operations needed to reach n H characters.
 
-    :param n: The target number of 'H' characters.
-    :return: The minimum number of operations or 0 if impossible.
+    Args:
+        n: The target number of H characters.
+
+    Returns:
+        The minimum number of operations, or 0 if n is impossible to achieve.
     """
-    if n <= 1:
-        return n
 
-    # Initialize variables
+    if n < 1:
+        return 0  # Invalid input
+
     operations = 0
-    clipboard = 1
-    current = 1
+    while n > 1:
+        # Find the largest power of 2 that divides n
+        largest_power = 0
+        while n % 2 == 0:
+            n //= 2
+            largest_power += 1
 
-    while current < n:
-        if n % current == 0:
-            clipboard = current
-            operations += 1
-        current += clipboard
+        # Add the number of operations for this power
+        operations += largest_power
+        n -= largest_power  # Subtract remaining characters after division
 
-    return operations
+    # Add one final operation to copy the remaining character
+    return operations + 1
