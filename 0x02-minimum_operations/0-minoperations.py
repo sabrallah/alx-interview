@@ -7,7 +7,7 @@ This module contains the minOperations function
 def minOperations(n):
     """
     Calculate the minimum operations to achieve exactly n H characters
-    
+
     :param n: int
     :return: int
     """
@@ -25,6 +25,3 @@ def minOperations(n):
         h += 1
 
     return ops
-
-
-if __name__ == "__main__":
