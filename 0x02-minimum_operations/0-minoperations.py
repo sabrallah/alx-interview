@@ -1,27 +1,27 @@
 #!/usr/bin/python3
 """
-0-minoperations.py - Contains the minOperations function to calculate
-the fewest number of operations needed
-to result in exactly n H characters in the file.
+0-minoperations.py - Minimum Operations
 """
-
 
 def minOperations(n):
     """
-    Calculates the fewest number of operations needed
-    to result in exactly n H characters.
+    Calculates the fewest number of operations needed to obtain exactly n 'H' characters.
 
-    Parameters:
-    - n (int): The target number of H characters.
-
-    Returns:
-    - int: The minimum number of operations needed.
+    :param n: The target number of 'H' characters.
+    :return: The minimum number of operations or 0 if impossible.
     """
     if n <= 1:
         return n
 
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return minOperations(n // i) + i
+    # Initialize variables
+    operations = 0
+    clipboard = 1
+    current = 1
 
-    return n
+    while current < n:
+        if n % current == 0:
+            clipboard = current
+            operations += 1
+        current += clipboard
+
+    return operations
