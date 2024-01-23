@@ -35,6 +35,7 @@ if __name__ == "__main__":
         try:
             numbers.append(int(arg))
         except ValueError:
-            pass
-
-    print_stats(numbers)
+            print(f"Invalid number: {arg}")
+            sys.exit(1)
+    
+        print_stats(numbers)
