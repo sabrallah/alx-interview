@@ -1,72 +1,52 @@
 #!/usr/bin/python3
+"""
+This module contains a method that reads stdin line by line and
+computes metrics
+"""
+import dis
 import sys
 
-"""
-This script parses log lines from stdin, calculates the total file size, and counts the occurrences of each status code.
-"""
 
-def print_stats(total_size, status_codes):
+def display_metrics(total_size, status_code):
     """
-    Print the total file size and the count of each status code.
-
-    Args:
-        total_size (int): The total size of the file.
-        status_codes (dict): A dictionary containing the count of each status code.
-
-    Returns:
-        None
+    Function that print the metrics
     """
-    print("File size: {}".format(total_size))
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print("{}: {}".format(code, status_codes[code]))
 
-def parse_line(line):
-    """
-    Parse a log line and extract the size and status code.
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(status_code.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
 
-    Args:
-        line (str): The log line to parse.
 
-    Returns:
-        tuple: A tuple containing the size and status code extracted from the log line.
-    """
-    try:
-        parts = line.split()
-        size = int(parts[-1])
-        code = int(parts[-2])
-        return size, code
-    except (IndexError, ValueError):
-        return None, None
-
-def main():
-    """
-    Main function that reads log lines from stdin, parses them, and prints the statistics.
-
-    Returns:
-        None
-    """
+if __name__ == '__main__':
     total_size = 0
-    status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-    line_count = 0
+    status_code = {
+        '200': 0,
+        '301': 0,
+        '400': 0,
+        '401': 0,
+        '403': 0,
+        '404': 0,
+        '405': 0,
+        '500': 0
+    }
 
     try:
+        i = 0
         for line in sys.stdin:
-            size, code = parse_line(line)
-            if size is not None and code is not None:
-                total_size += size
-                if code in status_codes:
-                    status_codes[code] += 1
-
-            line_count += 1
-            if line_count % 10 == 0:
-                print_stats(total_size, status_codes)
+            args = line.split()
+            if len(args) > 6:
+                status = args[-2]
+                file_size = args[-1]
+                total_size += int(file_size)
+                if status in status_code:
+                    i += 1
+                    status_code[status] += 1
+                    if i % 10 == 0:
+                        display_metrics(total_size, status_code)
 
     except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
+        display_metrics(total_size, status_code)
         raise
-
-    print_stats(total_size, status_codes)
-
-if __name__ == "__main__":
-    main()
+    else:
+        display_metrics(total_size, status_code)
