@@ -14,7 +14,7 @@ def parse_line(line):
         size = int(parts[-1])
         code = int(parts[-2])
         return size, code
-    except (ValueError, IndexError):
+    except (IndexError, ValueError):
         return None, None
 
 def main():
