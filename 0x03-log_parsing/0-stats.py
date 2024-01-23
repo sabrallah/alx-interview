@@ -1,42 +1,50 @@
 #!/usr/bin/python3
+""" 
+This script reads lines from standard input (stdin) and computes metrics.
+
+It parses each line, extracts relevant information, and calculates the total file size
+along with the count of different HTTP status codes. Periodically, it displays the metrics.
+
+Usage:
+    $ cat log_file.txt | python3 0-stats.py
+"""
+
 import sys
-import signal
-
-# Initialize variables
-status_codes = {"200": 0, "301": 0, "400": 0, "401": 0,
-                "403": 0, "404": 0, "405": 0, "500": 0}
-file_size = 0
 
 
-def print_stats():
-    print("File size: {:d}".format(file_size))
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print("{:s}: {:d}".format(code, status_codes[code]))
+def print_metrics(total_size, status_code):
+    """ 
+    Function that prints the metrics 
+    """
+    print(f'File size: {total_size}')
+    for key, value in sorted(status_code.items()):
+        if value != 0:
+            print(f'{key}: {value}')
 
 
-def signal_handler(sig, frame):
-    print_stats()
-    sys.exit(0)
+if __name__ == '__main__':
+    total_size = 0
+    status_code = {'200': 0, '301': 0, '400': 0, '401': 0,
+                   '403': 0, '404': 0, '405': 0, '500': 0}
 
-# Handle Ctrl+C
+    try:
+        i = 0
+        for line in sys.stdin:
+            args = line.split()
+            if len(args) > 6:
+                status = args[-2]
+                file_size = args[-1]
+                total_size += int(file_size)
 
+                if status in status_code:
+                    i += 1
+                    status_code[status] += 1
 
-signal.signal(signal.SIGINT, signal_handler)
+                if i % 10 == 0:
+                    print_metrics(total_size, status_code)
 
-
-# Main loop
-if __name__ == "__main__":
-    for i, line in enumerate(sys.stdin, 1):
-        try:
-            parts = line.split()
-            status_code = parts[-2]
-            file_size += int(parts[-1])
-            if status_code in status_codes:
-                status_codes[status_code] += 1
-        except IndexError:
-            pass
-        if i % 10 == 0:
-            print_stats()
-
-    print_stats()
+    except KeyboardInterrupt:
+        print_metrics(total_size, status_code)
+        raise
+    else:
+        print_metrics(total_size, status_code)
