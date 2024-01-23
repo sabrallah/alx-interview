@@ -14,7 +14,7 @@ def parse_line(line):
         size = int(parts[-1])
         code = int(parts[-2])
         return size, code
-    except (IndexError, ValueError):
+    except (ValueError, IndexError):
         return None, None
 
 def main():
@@ -36,6 +36,9 @@ def main():
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
+        raise
+
+    print_stats(total_size, status_codes)
 
 if __name__ == "__main__":
     main()
