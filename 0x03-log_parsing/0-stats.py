@@ -1,50 +1,40 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+"""
+Module for calculating statistics of input data
+"""
 
 import sys
 
 
-def print_statistics(total_size, status_counts):
-    print("File size: {}".format(total_size))
-    for status_code in sorted(status_counts.keys()):
-        print("{}: {}".format(status_code, status_counts[status_code]))
+def print_stats(numbers):
+    """
+    Prints the minimum, maximum, sum, and average of a list of numbers
+    """
+    if len(numbers) == 0:
+        print("No numbers provided")
+        return
 
+    min_num = min(numbers)
+    max_num = max(numbers)
+    sum_num = sum(numbers)
+    avg_num = sum_num / len(numbers)
 
-def process_line(line, total_size, status_counts):
-    parts = line.split()
-    if len(parts) == 10 and parts[8].isdigit():
-        status_code = int(parts[8])
-        file_size = int(parts[9])
-
-        total_size += file_size
-
-        if status_code in status_counts:
-            status_counts[status_code] += 1
-        else:
-            status_counts[status_code] = 1
-
-        return total_size, status_counts
-
-    return total_size, status_counts
-
-
-def main():
-    total_size = 0
-    status_counts = {}
-
-    try:
-        for i, line in enumerate(sys.stdin, start=1):
-            total_size, status_counts = process_line(line,
-                                                     total_size, status_counts)
-
-            if i % 10 == 0:
-                print_statistics(total_size, status_counts)
-
-    except KeyboardInterrupt:
-        pass
-
-    # Print final statistics before exiting
-    print_statistics(total_size, status_counts)
+    print(f"Minimum: {min_num}")
+    print(f"Maximum: {max_num}")
+    print(f"Sum: {sum_num}")
+    print(f"Average: {avg_num}")
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print("Usage: ./0-stats.py [list of numbers]")
+        sys.exit(1)
+
+    numbers = []
+    for arg in sys.argv[1:]:
+        try:
+            numbers.append(int(arg))
+        except ValueError:
+            pass
+
+    print_stats(numbers)
