@@ -1,16 +1,21 @@
 #!/usr/bin/python3
 
+"""
+This module contains a function for validating UTF-8 encoding.
+"""
+
 def validUTF8(data):
     """
-    Check if the given data is a valid UTF-8 encoding.
+    Validate if a given list of integers represents a valid UTF-8 encoding.
 
     Args:
-        data (list[int]): The data to be checked.
+        data (list): A list of integers representing UTF-8 encoded characters.
 
     Returns:
         bool: True if the data is a valid UTF-8 encoding, False otherwise.
     """
     num_bytes = 0
+
     for num in data:
         if num_bytes == 0:
             if (num >> 5) == 0b110:
@@ -25,4 +30,5 @@ def validUTF8(data):
             if (num >> 6) != 0b10:
                 return False
             num_bytes -= 1
+
     return num_bytes == 0
