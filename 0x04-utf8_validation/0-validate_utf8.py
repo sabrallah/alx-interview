@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module for validating UTF-8 encoding
+Module for UTF-8 Validation
 """
 
 
@@ -8,34 +8,53 @@ def validUTF8(data):
     """
     Determines if a given data set represents a valid UTF-8 encoding.
     Args:
-        - data: list of integers representing 1 byte of data
-    Returns:
-        - True if data is a valid UTF-8 encoding, else False
-    """
-    # Number of bytes in the current UTF-8 character
-    num_bytes = 0
+        data (list): List of integers representing 1 byte of data.
 
-    for byte in data:
-        # If the current byte is the start of a new character
-        if num_bytes == 0:
-            # Determine the number of bytes in the UTF-8 character
-            if byte >> 7 == 0b0:
-                num_bytes = 1
-            elif byte >> 5 == 0b110:
-                num_bytes = 2
-            elif byte >> 4 == 0b1110:
-                num_bytes = 3
-            elif byte >> 3 == 0b11110:
-                num_bytes = 4
+    Returns:
+        bool: True if data is a valid UTF-8 encoding, else return False.
+    """
+    # Number of trailing bytes for the current UTF-8 character
+    num_trailing_bytes = 0
+
+    for num in data:
+        # Check if the current byte is a trailing byte
+        if num_trailing_bytes == 0:
+            if (num >> 7) == 0b0:
+                # Single byte character
+                continue
+            elif (num >> 5) == 0b110:
+                # Two byte character
+                num_trailing_bytes = 1
+            elif (num >> 4) == 0b1110:
+                # Three byte character
+                num_trailing_bytes = 2
+            elif (num >> 3) == 0b11110:
+                # Four byte character
+                num_trailing_bytes = 3
             else:
+                # Invalid start of UTF-8 character
                 return False
         else:
-            # Check if the current byte is a continuation byte
-            if byte >> 6 != 0b10:
+            # Check if the current byte is a trailing byte
+            if (num >> 6) == 0b10:
+                num_trailing_bytes -= 1
+            else:
+                # Invalid trailing byte
                 return False
 
-            # Decrement the number of bytes expected for the current character
-            num_bytes -= 1
+    # Check if there are missing trailing bytes at the end
+    return num_trailing_bytes == 0
 
-    # If there are remaining bytes to complete a character, it's invalid
-    return num_bytes == 0
+# Test cases
+
+
+if __name__ == "__main__":
+    data1 = [65]
+    print(validUTF8(data1))  # True
+
+    data2 = [80, 121, 116, 104, 111, 110, 32, 105,
+             115, 32, 99, 111, 111, 108, 33]
+    print(validUTF8(data2))  # True
+
+    data3 = [229, 65, 127, 256]
+    print(validUTF8(data3))  # False
