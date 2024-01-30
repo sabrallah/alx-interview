@@ -25,3 +25,4 @@ All of the following folders are projects done during the studies:
 | [`0x01. Lockboxes`](https://github.com/sabrallah/alx-interview/tree/master/0x01-lockboxes) | It aims to learn about locked boxes in **Python language**.|
 | [`0x02. Minimum Operations`](https://github.com/sabrallah/alx-interview/tree/master/0x02-minimum_operations) | It aims to learn about minimum operations in **Python language**.|
 | [`0x03. log_parsing`](https://github.com/sabrallah/alx-interview/tree/master/0x03-log_parsing) | It aims to learn about  reads input from standard input (stdin) line by line and computes certain metrics based on the input format provided  in **Python language**.|
+| [`0x04. UTF-8 Validation`](https://github.com/sabrallah/alx-interview/tree/master/0x04-utf8_validation) | It aims to learn about the UTF-8 Validation **Python language**.|
