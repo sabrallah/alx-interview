@@ -1,32 +1,57 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
-This module provides a function to validate UTF-8 encoded data.
+Main file for testing
 """
 
 
 def validUTF8(data):
     """
-    Validates whether the given data is UTF-8 encoded.
-
-    Args:
-        data (list[int]): The data to be validated.
-
-    Returns:
-        bool: True if the data is valid UTF-8 encoded, False otherwise.
+    Method to determine if a given data set represents a valid UTF-8 encoding
     """
-    num_bytes = 0
-    for num in data:
-        if num_bytes == 0:
-            if (num >> 5) == 0b110:
-                num_bytes = 1
-            elif (num >> 4) == 0b1110:
-                num_bytes = 2
-            elif (num >> 3) == 0b11110:
-                num_bytes = 3
-            elif (num >> 7):
+    # Helper function to check if a byte is a valid start byte
+    def is_start_byte(byte):
+        return bin(byte).startswith('0b1' + '0' * max(6 - len(bin(byte)), 0))
+
+    # Helper function to check if a byte is a valid continuation byte
+    def is_continuation_byte(byte):
+        return bin(byte).startswith('0b10')
+
+    # Initialize count to track expected continuation bytes
+    count = 0
+
+    # Iterate through each byte in the data
+    for byte in data:
+        if count == 0:
+            # Check for the number of bytes in the character
+            if byte < 0b10000000:
+                continue
+            elif byte < 0b11000000:
+                return False
+            elif byte < 0b11100000:
+                count = 1
+            elif byte < 0b11110000:
+                count = 2
+            elif byte < 0b11111000:
+                count = 3
+            else:
                 return False
         else:
-            if (num >> 6) != 0b10:
+            # Check if the byte is a valid continuation byte
+            if not is_continuation_byte(byte):
                 return False
-            num_bytes -= 1
-    return num_bytes == 0
+            count -= 1
+
+    # Check if there are any remaining expected continuation bytes
+    return count == 0
+
+
+if __name__ == "__main__":
+    data = [65]
+    print(validUTF8(data))  # Should print True
+
+    data = [80, 121, 116, 104, 111, 110, 32, 105,
+            115, 32, 99, 111, 111, 108, 33]
+    print(validUTF8(data))  # Should print True
+
+    data = [229, 65, 127, 256]
+    print(validUTF8(data))  # Should print False
