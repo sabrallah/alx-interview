@@ -1,37 +1,49 @@
-"""
-This module contains a function for validating UTF-8 encoded data.
-"""
+#!/usr/bin/python3
+
+"""UTF-8 Validation"""
+
+
+def Get_Leading_Set_Bit(Num):
+    """Returns the number of leading set bits (1) in a given number.
+
+    Args:
+        Num (int): The number to count the leading set bits in.
+
+    Returns:
+        int: The number of leading set bits.
+
+    """
+    Set_Bit = 0
+    helper = 1 << 7
+    while helper & Num:
+        Set_Bit += 1
+        helper = helper >> 1
+    return Set_Bit
 
 
 def validUTF8(data):
-    """
-    Validate if the given data is UTF-8 encoded.
+    """Determines if a given data set represents a valid UTF-8 encoding.
 
     Args:
-        data (list[int]): The data to be validated.
+        data (list): The data set to validate.
 
     Returns:
-        bool: True if the data is valid UTF-8 encoded, False otherwise.
-    """
-    num_bytes = 0
+        bool: True if the data set is a valid UTF-8 encoding, False otherwise.
 
-    for byte in data:
-        if num_bytes == 0:
-            if (byte >> 5) == 0b110:
-                num_bytes = 1
-            elif (byte >> 4) == 0b1110:
-                num_bytes = 2
-            elif (byte >> 3) == 0b11110:
-                num_bytes = 3
-            elif (byte >> 7) != 0:
+    """
+    Bit_Count = 0
+    for i in range(len(data)):
+        if Bit_Count == 0:
+            Bit_Count = Get_Leading_Set_Bit(data[i])
+            '''1-byte (format: 0xxxxxxx)'''
+            if Bit_Count == 0:
+                continue
+            '''a character in UTF-8 can be 1 to 4 bytes long'''
+            if Bit_Count == 1 or Bit_Count > 4:
                 return False
         else:
-            if (byte >> 6) != 0b10:
+            '''checks if current byte has format 10xxxxxx'''
+            if not (data[i] & (1 << 7) and not (data[i] & (1 << 6))):
                 return False
-            num_bytes -= 1
-
-    return num_bytes == 0
-
-
-if __name__ == "__main__":
-    pass
+        Bit_Count -= 1
+    return Bit_Count == 0
