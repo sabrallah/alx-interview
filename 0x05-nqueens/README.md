@@ -63,6 +63,6 @@ $ ./0-nqueens.py 6
 
 ## Repo Information
 
-- GitHub repository: [alx-interview](https://github.com/username/alx-interview)
-- Directory: `0x05-nqueens`
+- GitHub repository: [alx-interview](https://github.com/sabrallah/alx-interview/tree/master)
+- Directory: [0x05-nqueens](https://github.com/sabrallah/alx-interview/tree/master/0x05-nqueens) 
 - File: `0-nqueens.py`
