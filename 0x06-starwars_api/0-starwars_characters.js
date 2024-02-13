@@ -13,7 +13,7 @@ request(url, function (error, response, body) {
   }
 });
 
-function printCharacters(characters, index) {
+function printCharacters (characters, index) {
   request(characters[index], function (error, response, body) {
     if (error) {
       console.log(error);
