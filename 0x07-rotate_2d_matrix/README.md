@@ -28,8 +28,8 @@ This project focuses on implementing an in-place algorithm to rotate an n x n 2D
    - Code should be executable and meet specified requirements.
 
 ## Repository Information
-- [GitHub Repository: alx-interview](https://github.com/user/repo)
-- [Directory: 0x07-rotate_2d_matrix](https://github.com/user/repo/tree/master/0x07-rotate_2d_matrix)
+- [GitHub Repository: alx-interview](https://github.com/sabrallah/alx-interview/tree/master)
+- [Directory: 0x07-rotate_2d_matrix](https://github.com/sabrallah/alx-interview/tree/master/0x07-rotate_2d_matrix)
 - File: 0-rotate_2d_matrix.py
 
 ## Author
