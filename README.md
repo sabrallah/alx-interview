@@ -28,3 +28,5 @@ All of the following folders are projects done during the studies:
 | [`0x04. UTF-8 Validation`](https://github.com/sabrallah/alx-interview/tree/master/0x04-utf8_validation) | It aims to learn about the UTF-8 Validation **Python language**.|
 | [`0x05. nqueens`](https://github.com/sabrallah/alx-interview/tree/master/0x05-nqueens) | It aims to implement a solution for the N Queens puzzle using Python. **Python language**.|
 | [`0x06. starwars_api`](https://github.com/sabrallah/alx-interview/tree/master/0x06-starwars_api) | It aims to create a script that interacts with the Star Wars API to retrieve and display information about characters from a specific Star Wars movie. **Javascript language**.|
+| [`0x07-rotate_2d_matrix`](https://github.com/sabrallah/alx-interview/tree/master/0x07-rotate_2d_matrix) | The key focus is on understanding matrix manipulation, in-place operations, and utilizing nested loops for efficient iteration through matrices. **Python language**.|
+
