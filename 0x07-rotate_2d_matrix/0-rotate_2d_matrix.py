@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-"""
-Rotate a 2D matrix by 90 degrees clockwise
-"""
+"""Rotate a 2D matrix by 90 degrees clockwise."""
+
 
 def rotate_2d_matrix(matrix):
     """
-    Rotate a 2D matrix by 90 degrees clockwise in-place
+    Rotate a 2D matrix by 90 degrees clockwise in-place.
+
     :param matrix: 2D list representing the matrix to be rotated
     :return: None
     """
@@ -20,6 +20,8 @@ def rotate_2d_matrix(matrix):
             matrix[j][n - 1 - i] = temp
 
 # Test the function
+
+
 if __name__ == "__main__":
     matrix = [[1, 2, 3],
               [4, 5, 6],
