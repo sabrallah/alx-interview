@@ -19,13 +19,12 @@ def rotate_2d_matrix(matrix):
             matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i]
             matrix[j][n - 1 - i] = temp
 
+
 # Test the function
 
 
 if __name__ == "__main__":
-    matrix = [[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 9]]
+    matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     rotate_2d_matrix(matrix)
     for row in matrix:
