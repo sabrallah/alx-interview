@@ -31,3 +31,13 @@ This project focuses on implementing an in-place algorithm to rotate an n x n 2D
 - [GitHub Repository: alx-interview](https://github.com/user/repo)
 - [Directory: 0x07-rotate_2d_matrix](https://github.com/user/repo/tree/master/0x07-rotate_2d_matrix)
 - File: 0-rotate_2d_matrix.py
+
+## Author
+- Sabrallah Youssef (The Greatest of All Times) - [GitHub Profile](https://github.com/sabrallah)
+
+## Important Dates
+- Project Start: Feb 19, 2024, 4:00 AM
+- Project End: Feb 23, 2024, 4:00 AM
+- Checker Release: Feb 20, 2024, 4:00 AM
+
+Copyright © 2024 ALX. All rights reserved.
