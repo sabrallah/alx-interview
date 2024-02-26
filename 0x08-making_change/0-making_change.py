@@ -1,37 +1,24 @@
 #!/usr/bin/python3
-"""
-0. Change comes from within
-Given a pile of coins of different values, determine the fewest number of coins needed
-to meet a given amount total.
-
-Prototype: def makeChange(coins, total)
-Return: fewest number of coins needed to meet total
-If total is 0 or less, return 0
-If total cannot be met by any number of coins you have, return -1
-coins is a list of the values of the coins in your possession
-The value of a coin will always be an integer greater than 0
-You can assume you have an infinite number of each denomination of coin in the list
-Your solutions runtime will be evaluated in this task
-"""
-
 def makeChange(coins, total):
-    if total < 0:
-        return 0
-    if total == 0:
-        return 0
+    """
+    Function to determine the fewest number of coins needed to meet a given amount total.
     
-    # Initialize an array to store the minimum number of coins for each amount
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-    
-    # Iterate through each coin denomination
+    Parameters:
+    coins (list): A list of the values of the coins in your possession
+    total (int): The total amount to meet
+
+    Returns:
+    num_coins (int): The fewest number of coins needed to meet total. Returns -1 if total cannot be met by any number of coins.
+    """
+    if total <= 0:
+        return 0
+    coins.sort(reverse=True)
+    num_coins = 0
     for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
-
-    return dp[total] if dp[total] != float('inf') else -1
-
-# Sample test cases
-if __name__ == "__main__":
-    print(makeChange([1, 2, 25], 37))  # Output: 7
-    print(makeChange([1256, 54, 48, 16, 102], 1453))  # Output: -1
+        if total == 0:
+            return num_coins
+        num_coins += total // coin
+        total %= coin
+    if total != 0:
+        return -1
+    return num_coins
