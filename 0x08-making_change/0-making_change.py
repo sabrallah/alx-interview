@@ -1,22 +1,24 @@
 #!/usr/bin/python3
-"""
-This module solves the change problem
-"""
+
+""" Containe MakeChange function"""
 
 
-def make_change(coins, total):
+def makeChange(coins, total):
     """
-    Finds the fewest number of coins needed to meet total
+    Returns: few numbers coins need to meet totals
+        If totals is 0 or less, return 0
+        If totals cannot be mets by number coins you have, return -1
     """
+    if not coins or coins is None:
+        return -1
     if total <= 0:
         return 0
-    coin_min = {0: 0}
-    for value in range(1, total + 1):
-        coin_min[value] = float('inf')
-        for coin in coins:
-            if value >= coin:
-                coin_min[value] = min(coin_min[value], coin_min[value - coin] + 1)
-    if coin_min[total] != float('inf'):
-        return coin_min[total]
-    else:
-        return -1
+    change = 0
+    coins = sorted(coins)[::-1]
+    for coind in coins:
+        while coind <= total:
+            total -= coind
+            change += 1
+        if (total == 0):
+            return change
+    return -1
