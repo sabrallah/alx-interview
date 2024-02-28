@@ -23,3 +23,4 @@ def makeChange(coins, total):
             count += 1
             total -= coin
     return count if total == 0 else -1
+
