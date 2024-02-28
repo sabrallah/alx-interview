@@ -3,9 +3,9 @@
 This module contains the solution to the "Change comes from within" project
 """
 
-def makeChange(coins, total):
-    """
-    Returns the fewest number of coins needed to meet total
+
+def make_change(coins, total):
+    """Returns the fewest number of coins needed to meet total
     using coins in the list of values
 
     Args:
@@ -23,4 +23,5 @@ def makeChange(coins, total):
             count += 1
             total -= coin
     return count if total == 0 else -1
+
 
