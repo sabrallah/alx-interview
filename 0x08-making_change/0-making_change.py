@@ -1,27 +1,58 @@
 #!/usr/bin/python3
 """
-This module contains the solution to the "Change comes from within" project
+Making Change problem
+
+https://www.algoexpert.io/questions/Making%20Change
+
+Given an infinite number of quarters (25 cents), dimes (10 cents),
+nickels (5 cents), and pennies (1 cent), write code to calculate the
+number of ways of making n cents.
+
+Constraints:
+0 <= n <= 10000
+
+Example:
+n = 4
+
+Number of ways of making 4 cents is 4. The ways are:
+1 cent, 1 cent, 1 cent, 1 cent
+1 cent, 1 cent, 2 pennies
+1 cent, 2 nickels
+2 pennies, 2 pennies
+
+Assumptions:
+- Coins have infinite supply
+
+Algorithm:
+Dynamic programming
+
+Time Complexity:
+O(n)
+
+Space Complexity:
+O(n)
+
 """
 
 
-def make_change(coins, total):
-    """Returns the fewest number of coins needed to meet total
-    using coins in the list of values
+def makeChange(coins, total):
+    """
+    Return number of ways to make change
 
     Args:
-        coins (list): List of coin values
-        total (int): Total amount to make with coins
+        coins (List[int]): Coins
+        total (int): Total
 
     Returns:
-        int: Fewest number of coins needed to meet total
-            or -1 if total cannot be made with coins
+        int: Number of ways to make change
     """
-    coins = sorted(coins, reverse=True)
-    count = 0
+    ways = [0] * (total + 1)
+    ways[0] = 1
     for coin in coins:
-        while total - coin >= 0:
-            count += 1
-            total -= coin
-    return count if total == 0 else -1
+        for i in range(coin, total + 1):
+            ways[i] += ways[i - coin]
+
+    return ways[total]
+
 
 
