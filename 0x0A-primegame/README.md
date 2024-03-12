@@ -91,7 +91,7 @@ By grasping these concepts and making use of the recommended resources, you will
   nums = [4, 5, 1]
   # Result: Ben has the most wins
 Repository Information
-[GitHub Repository](https://github.com/sabrallah/alx-interview/tree/master)
-[Directory: 0x0A-primegame](https://github.com/sabrallah/alx-interview/tree/master/0x0A-primegame)
-[File: [0-prime_game.py](https://github.com/sabrallah/alx-interview/blob/master/0x0A-primegame/0-prime_game.py)]
+- [GitHub Repository](https://github.com/sabrallah/alx-interview/tree/master)
+- [Directory: 0x0A-primegame](https://github.com/sabrallah/alx-interview/tree/master/0x0A-primegame)
+- [File: [0-prime_game.py](https://github.com/sabrallah/alx-interview/blob/master/0x0A-primegame/0-prime_game.py)]
 
