@@ -83,7 +83,7 @@ By grasping these concepts and making use of the recommended resources, you will
 
 - **Assumptions:**
   - `n` and `x` will not be larger than 10000
-  - Cannot import any packages in this task
+  - Cannot import any packages in this tasks
 
 - **Example:**
   ```python
