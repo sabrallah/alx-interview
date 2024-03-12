@@ -1,71 +1,37 @@
 #!/usr/bin/python3
 """
-0. Prime Game
+Prime Game module for ALX interview
 """
 
 
-def is_prime(n):
-  """
-  This function checks if a number n is prime.
-  Replace it with your implementation using trial division or Sieve of Eratosthenes.
-  """
-  # Implement logic to check for prime numbers
-  pass
+def is_primme(x):
+    """Determine if a number is a prime."""
+    if x < 2:
+        return False
+    for v in range(2, int(x ** 0.5) + 1):
+        if x % v == 0:
+            return False
+    return True
 
-def remove_multiples(nums, prime):
-  """
-  This function removes all elements in nums that are multiples of prime.
-  """
-  new_nums = []
-  for num in nums:
-    if num % prime != 0:
-      new_nums.append(num)
-  return new_nums
-
-def play_round(nums, player):
-  """
-  Simulates a single round of the game.
-  """
-  primes = [num for num in nums if is_prime(num)]  # Find all primes in nums
-  if not primes:
-    return "Ben" if player == "Maria" else "Maria"  # Opponent wins if no primes
-
-  # Let the current player choose a prime number (replace with logic for player choice)
-  chosen_prime = primes[0]  # Replace with actual player selection
-
-  # Remove the chosen prime and its multiples
-  nums = remove_multiples(nums, chosen_prime)
-
-  return "Ben" if player == "Maria" else "Maria"  # Switch player for next round
 
 def isWinner(x, nums):
-  """
-  Determines the winner of the game after x rounds.
-  """
-  winner = None
-  wins_maria = 0
-  wins_ben = 0
+    """Determine the winner."""
+    if x < 1 or not nums:
+        return None
 
-  for _ in range(x):
-    result = play_round(nums.copy(), "Maria")  # Play a round with Maria starting
+    maria_win = 0
+    ben_win = 0
 
-    if result != "None":
-      winner = result
-      break  # Stop if a winner is determined
+    max_number = max(nums)
+    prime = [is_primme(v) for v in range(max_number + 1)]
 
-    # Update nums for next round (consider efficiency here)
-    nums = remove_multiples(nums, 2)  # Remove already chosen 2 (optimize this)
+    for n in nums[:x]:
+        prime_counter = sum(prime[:n])
+        if prime_counter % 2 == 0:
+            ben_win += 1
+        else:
+            maria_win += 1
 
-    # Switch player for next round
-    result = play_round(nums.copy(), "Ben")
-
-    if result != "None":
-      winner = result
-      break
-
-  if not winner:  # Count wins if no winner after all rounds
-    wins_maria = sum(is_prime(num) for num in nums)
-    wins_ben = x - wins_maria
-    winner = "Maria" if wins_maria > wins_ben else ("Ben" if wins_ben > wins_maria else "None")
-
-  return winner
+    if maria_win == ben_win:
+        return None
+    return 'Maria' if maria_win > ben_win else 'Ben'
