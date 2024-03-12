@@ -3,6 +3,7 @@
 0. Prime Game
 """
 
+
 def isWinner(x, nums):
     """
     Determines the winner of each round of the prime game.
@@ -12,7 +13,8 @@ def isWinner(x, nums):
         nums (list): Array of n for each round
 
     Returns:
-        str or None: Name of the player that won the most rounds, or None if the winner cannot be determined
+        str or None: Name of the player that won the most rounds,
+or None if the winner cannot be determined
     """
 
     def is_prime(num):
