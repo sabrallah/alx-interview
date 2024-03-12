@@ -1,37 +1,28 @@
 #!/usr/bin/python3
+"""Determines the winner of a prime game.
 """
-Prime Game module for ALX interview
-"""
-
-
-def is_primme(x):
-    """Determine if a number is a prime."""
-    if x < 2:
-        return False
-    for v in range(2, int(x ** 0.5) + 1):
-        if x % v == 0:
-            return False
-    return True
 
 
 def isWinner(x, nums):
-    """Determine the winner."""
+    """Determines the winner of a prime game.
+    """
     if x < 1 or not nums:
         return None
-
-    maria_win = 0
-    ben_win = 0
-
-    max_number = max(nums)
-    prime = [is_primme(v) for v in range(max_number + 1)]
-
-    for n in nums[:x]:
-        prime_counter = sum(prime[:n])
-        if prime_counter % 2 == 0:
-            ben_win += 1
-        else:
-            maria_win += 1
-
-    if maria_win == ben_win:
+    marias_wins, bens_wins = 0, 0
+    # create list of primes
+    n = max(nums)
+    primes = [True for _ in range(1, n + 1, 1)]
+    primes[0] = False
+    for i, is_prime in enumerate(primes, 1):
+        if i == 1 or not is_prime:
+            continue
+        for j in range(i + i, n + 1, i):
+            primes[j - 1] = False
+    # count the number of primes in each number
+    for _, n in zip(range(x), nums):
+        primes_count = len(list(filter(lambda x: x, primes[0: n])))
+        bens_wins += primes_count % 2 == 0
+        marias_wins += primes_count % 2 == 1
+    if marias_wins == bens_wins:
         return None
-    return 'Maria' if maria_win > ben_win else 'Ben'
+    return 'Maria' if marias_wins > bens_wins else 'Ben'
