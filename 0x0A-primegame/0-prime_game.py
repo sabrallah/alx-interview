@@ -4,83 +4,68 @@
 """
 
 
+def is_prime(n):
+  """
+  This function checks if a number n is prime.
+  Replace it with your implementation using trial division or Sieve of Eratosthenes.
+  """
+  # Implement logic to check for prime numbers
+  pass
+
+def remove_multiples(nums, prime):
+  """
+  This function removes all elements in nums that are multiples of prime.
+  """
+  new_nums = []
+  for num in nums:
+    if num % prime != 0:
+      new_nums.append(num)
+  return new_nums
+
+def play_round(nums, player):
+  """
+  Simulates a single round of the game.
+  """
+  primes = [num for num in nums if is_prime(num)]  # Find all primes in nums
+  if not primes:
+    return "Ben" if player == "Maria" else "Maria"  # Opponent wins if no primes
+
+  # Let the current player choose a prime number (replace with logic for player choice)
+  chosen_prime = primes[0]  # Replace with actual player selection
+
+  # Remove the chosen prime and its multiples
+  nums = remove_multiples(nums, chosen_prime)
+
+  return "Ben" if player == "Maria" else "Maria"  # Switch player for next round
+
 def isWinner(x, nums):
-    """
-    Determines the winner of each round of the prime game.
+  """
+  Determines the winner of the game after x rounds.
+  """
+  winner = None
+  wins_maria = 0
+  wins_ben = 0
 
-    Parameters:
-        x (int): Number of rounds
-        nums (list): Array of n for each round
+  for _ in range(x):
+    result = play_round(nums.copy(), "Maria")  # Play a round with Maria starting
 
-    Returns:
-        str or None: Name of the player that won the most rounds,
-or None if the winner cannot be determined
-    """
+    if result != "None":
+      winner = result
+      break  # Stop if a winner is determined
 
-    def is_prime(num):
-        """
-        Checks if a number is prime.
+    # Update nums for next round (consider efficiency here)
+    nums = remove_multiples(nums, 2)  # Remove already chosen 2 (optimize this)
 
-        Parameters:
-            num (int): Number to check
+    # Switch player for next round
+    result = play_round(nums.copy(), "Ben")
 
-        Returns:
-            bool: True if the number is prime, False otherwise
-        """
-        if num < 2:
-            return False
-        for i in range(2, int(num**0.5) + 1):
-            if num % i == 0:
-                return False
-        return True
+    if result != "None":
+      winner = result
+      break
 
-    def get_primes(n):
-        """
-        Generates a list of prime numbers up to n.
+  if not winner:  # Count wins if no winner after all rounds
+    wins_maria = sum(is_prime(num) for num in nums)
+    wins_ben = x - wins_maria
+    winner = "Maria" if wins_maria > wins_ben else ("Ben" if wins_ben > wins_maria else "None")
 
-        Parameters:
-            n (int): Upper limit
-
-        Returns:
-            list: List of prime numbers up to n
-        """
-        primes = []
-        for i in range(2, n + 1):
-            if is_prime(i):
-                primes.append(i)
-        return primes
-
-    def count_moves(nums, primes):
-        """
-        Counts the number of moves each player can make.
-
-        Parameters:
-            nums (int): Number for the current round
-            primes (list): List of prime numbers up to nums
-
-        Returns:
-            dict: Dictionary with counts for each player's moves
-        """
-        count = {'Maria': 0, 'Ben': 0}
-        for prime in primes:
-            if prime > nums:
-                break
-            count['Maria' if nums % (prime + 1) == 0 else 'Ben'] += 1
-        return count
-
-    winners = {'Maria': 0, 'Ben': 0}
-
-    for n in nums:
-        primes = get_primes(n)
-        moves = count_moves(n, primes)
-
-        # Determine the winner of the round
-        if moves['Maria'] == moves['Ben']:
-            # If the moves are equal, no winner for the round
-            continue
-        winners['Maria' if moves['Maria'] > moves['Ben'] else 'Ben'] += 1
-
-    # Determine the overall winner
-    if winners['Maria'] == winners['Ben']:
-        return None
-    return 'Maria' if winners['Maria'] > winners['Ben'] else 'Ben'
+  return winner
