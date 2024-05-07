@@ -1,42 +1,46 @@
 #!/usr/bin/python3
 """
-This module defines a function island_perimeter that calculates the perimeter
-of an island represented in a grid.
+0. Island Perimeter
 """
+
 
 def island_perimeter(grid):
     """
-    Calculate the perimeter of an island in a grid.
+    Returns the perimeter of the island described in grid.
 
     Args:
-        grid (list of list of ints): The grid representation of the map,
-                                     where 1 represents land and 0 represents water.
+        grid (list of list of integers): Represents the island grid.
 
     Returns:
-        int: The perimeter of the island.
+        int: Perimeter of the island.
+
+    Constraints:
+        - grid is rectangular, with its width and height not exceeding 100.
+        - The grid is completely surrounded by water.
+        - There is only one island (or nothing).
+        - The island doesn’t have “lakes”
     """
-    rows = len(grid)
-    cols = len(grid[0]) if rows else 0
     perimeter = 0
+
+    if not grid or not grid[0]:
+        return perimeter
+
+    rows, cols = len(grid), len(grid[0])
 
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == 1:
-                # Check top
-                if i == 0 or grid[i-1][j] == 0:
-                    perimeter += 1
-                # Check bottom
-                if i == rows - 1 or grid[i+1][j] == 0:
-                    perimeter += 1
-                # Check left
-                if j == 0 or grid[i][j-1] == 0:
-                    perimeter += 1
-                # Check right
-                if j == cols - 1 or grid[i][j+1] == 0:
-                    perimeter += 1
+                perimeter += 4
+
+                if i > 0 and grid[i - 1][j] == 1:
+                    perimeter -= 2
+                if j > 0 and grid[i][j - 1] == 1:
+                    perimeter -= 2
 
     return perimeter
 
+
+# Example usage
 if __name__ == "__main__":
     grid = [
         [0, 0, 0, 0, 0, 0],
@@ -45,4 +49,4 @@ if __name__ == "__main__":
         [0, 1, 1, 1, 0, 0],
         [0, 0, 0, 0, 0, 0]
     ]
-    print(island_perimeter(grid))  # Output should be 12
+    print(island_perimeter(grid))
